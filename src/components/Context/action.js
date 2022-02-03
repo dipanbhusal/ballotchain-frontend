@@ -1,0 +1,42 @@
+import axios from '../Axios/axios'
+import { encrypt } from '../Axios/axios'
+import urls from '../Axios/urls'
+export async function loginUser(dispatch, loginPayload) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: loginPayload,
+  }
+  // try {
+
+  dispatch({ type: 'REQUEST_LOGIN' })
+  await axios({
+    url: urls.LOGIN,
+    ...requestOptions,
+  })
+    .then((response) => {
+      dispatch({ type: 'LOGIN_SUCCESS', payload: response })
+      let access = encrypt(response.data.details.token.access)
+      let refresh = encrypt(response.data.details.token.access)
+      let user = response.data.details.user.id
+      localStorage.setItem('currentUser', user)
+      localStorage.setItem('a-t', access.toString())
+      localStorage.setItem('r-t', refresh.toString())
+      axios.defaults.headers['Authorization'] =
+        'Bearer ' + response.data.details.token.access
+
+      return response.data
+    })
+    .catch((error) => {
+      console.log(error.response.data)
+      dispatch({ type: 'LOGIN_ERROR', error: error.response.data.message })
+    })
+}
+
+export async function logout(dispatch) {
+  // let history = useHistory()
+  dispatch({ type: 'LOGOUT' })
+  localStorage.removeItem('currentUser')
+  localStorage.removeItem('a-t')
+  localStorage.removeItem('r-t')
+}

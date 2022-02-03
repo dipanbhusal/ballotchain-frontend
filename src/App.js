@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+import Home from './components/Home/Home'
+import Login from './components/Authentication/Login'
+import Register from './components/Authentication/Register'
+import Mainlayout from './components/Layout/Mainlayout'
+import Vote from './components/Vote/Vote'
+import Candidates from './components/Candidates/Candidates'
+import Parties from './components/Parties/Parties'
+import { AuthProvider } from './components/Context/context'
+import AppRoute from './components/Authentication/AppRoutes'
+import Profile from './components/Authentication/Profile'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Mainlayout>
+              <AppRoute exact path="/" isPrivate={true}>
+                <Redirect to="/home" />
+              </AppRoute>
+
+              <AppRoute
+                exact
+                path="/home"
+                exact
+                component={Home}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/vote"
+                exact
+                component={Vote}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/candidates"
+                exact
+                component={Candidates}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/parties"
+                exact
+                component={Parties}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/profile"
+                exact
+                component={Profile}
+                isPrivate={true}
+              />
+            </Mainlayout>
+          </Switch>
+        </Router>
+      </AuthProvider>
+    </>
+  )
 }
 
-export default App;
+export default App

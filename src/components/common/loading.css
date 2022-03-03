@@ -1,38 +1,38 @@
-#outer {
-  margin: auto;
-  margin-top: 15%;
-  /* background: #44b9fc; */
-  /* height: 100px;
-    width: 100px;
-    border-radius: 15px; */
-}
-#middle {
-  height: 60px;
-  width: 60px;
-  margin: auto;
-  position: relative;
-  top: 20px;
-  border-radius: 50%;
-  background-image: linear-gradient(150deg, transparent 50%, #ffffff 50%),
-    linear-gradient(90deg, #ffffff 50%, #35425d 50%);
-  -webkit-animation: rotation 1200ms infinite linear;
-  transform-origin: 50% 50%;
-  animation-timing-function: ease;
-}
-#inner {
-  background: #ffffff;
-  height: 48px;
-  width: 48px;
-  margin: auto;
-  position: relative;
-  top: 6px;
-  border-radius: 50%;
-}
-@-webkit-keyframes rotation {
+@keyframes rotate {
   from {
-    -webkit-transform: rotate(270deg);
+    transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(630deg);
+    transform: rotate(360deg);
   }
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.load {
+  width: 100px;
+  height: 100px;
+  margin: 110px auto 0;
+  border: solid 10px #35425d;
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  -webkit-transition: all 0.5s ease-in;
+  -webkit-animation-name: rotate;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+
+  transition: all 0.5s ease-in;
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }

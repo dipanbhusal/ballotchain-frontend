@@ -31,6 +31,14 @@ export const AuthReducer = (initialState, action) => {
         loading: false,
         isAuthenticated: true,
       }
+    case 'REGISTER':
+      return {
+        ...initialState,
+        user: '',
+        token: '',
+        loading: false,
+        isAuthenticated: false,
+      }
     case 'LOGOUT':
       return {
         ...initialState,

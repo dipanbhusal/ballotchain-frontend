@@ -7,7 +7,6 @@ var AES_KEY = credential[0]['AES_KEY']
 const accessToken = decrypt(localStorage.getItem('a-t'))
 
 const headers = {
-  'Content-Type': 'application/json',
   accept: 'application/json',
   Authorization: 'Bearer ' + accessToken,
 }

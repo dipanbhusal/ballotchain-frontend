@@ -16,23 +16,12 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Vote',
-    path: '/vote',
+    title: 'Elections',
+    path: '/elections',
     icon: <FaVoteYea />,
     cName: 'nav-text',
   },
-  {
-    title: 'Candidates',
-    path: '/candidates',
-    icon: <IoIosPeople />,
-    cName: 'nav-text',
-  },
-  {
-    title: 'Parties',
-    path: '/parties',
-    icon: <IoIosPerson />,
-    cName: 'nav-text',
-  },
+
   {
     title: 'Profile',
     path: '/profile',

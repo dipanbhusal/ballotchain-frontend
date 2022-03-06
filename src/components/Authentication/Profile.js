@@ -137,18 +137,16 @@ const Profile = () => {
       url: urls.ELECTION_LIST,
     })
       .then((response) => {
-        setElection(response.data.details.prepration)
-        console.log(election)
+        setElection(response.data.details.preparation)
       })
       .catch((error) => {
-        console.log(error.response.data)
         errorMsg(error.response.data)
       })
   }, [])
 
   return (
     <>
-      {profile && election ? (
+      {profile ? (
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           {message && <Alert severity="success">{message}</Alert>}
           {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
@@ -201,7 +199,7 @@ const Profile = () => {
                       label="Father's Name"
                       placeholder="Enter father's name"
                       fullWidth
-                      defaultValue={fatherName}
+                      defaultValue={profile.father_name}
                       className={classes.formItems}
                       onChange={(e) => setFatherName(e.target.value)}
                     />
@@ -213,7 +211,7 @@ const Profile = () => {
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="gender"
-                      defaultValue={gender}
+                      defaultValue={profile.gender}
                       onChange={(e) => setGender(e.target.value)}
                       className={classes.formItems}
                     >
@@ -237,7 +235,7 @@ const Profile = () => {
                     <label htmlFor="date">Date Of Birth</label>
                     <NepaliDatePicker
                       placeholder="Select Date Of Birth"
-                      defaultDate={dob}
+                      defaultDate={profile.date_of_birth}
                       onDateSelect={(value) => setDob(value)}
                     />
                     <br />
@@ -275,7 +273,7 @@ const Profile = () => {
                       placeholder="Enter District"
                       fullWidth
                       className={classes.formItems}
-                      defaultValue={district}
+                      defaultValue={profile.district}
                       onChange={(e) => setDistrict(e.target.value)}
                     />
                     <br />
@@ -284,7 +282,7 @@ const Profile = () => {
                       placeholder="Enter Provience"
                       fullWidth
                       className={classes.formItems}
-                      defaultValue={provience}
+                      defaultValue={profile.provience}
                       onChange={(e) => setProvience(e.target.value)}
                     />
                     <br />
@@ -293,7 +291,7 @@ const Profile = () => {
                       placeholder="Enter Muncipality"
                       fullWidth
                       className={classes.formItems}
-                      defaultValue={municipality}
+                      defaultValue={profile.municipality}
                       onChange={(e) => setMuncipality(e.target.value)}
                     />
                     <br />
@@ -303,7 +301,7 @@ const Profile = () => {
                       placeholder="Enter Ward No."
                       fullWidth
                       className={classes.formItems}
-                      defaultValue={wardNo}
+                      defaultValue={profile.ward_no}
                       onChange={(e) => setWardNo(e.target.value)}
                     />
                     <br />
@@ -318,17 +316,18 @@ const Profile = () => {
                         Participating Election
                       </InputLabel>
                       <NativeSelect
-                        defaultValue={electionChoice}
+                        defaultValue={profile.enrolled_election}
                         inputProps={{
                           name: 'age',
                           id: 'uncontrolled-native',
                         }}
                         onChange={handleChange}
                       >
-                        <option value={null}>Select provience</option>
-                        {election.map((each) => {
-                          return <option value={each.id}>{each.title}</option>
-                        })}
+                        <option value={null}>Select election</option>
+                        {election &&
+                          election.map((each) => {
+                            return <option value={each.id}>{each.title}</option>
+                          })}
                       </NativeSelect>
                     </FormControl>
                     <br />

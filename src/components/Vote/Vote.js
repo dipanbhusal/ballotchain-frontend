@@ -263,7 +263,7 @@ const Vote = (props) => {
                           to={{
                             pathname: '/election-result',
                             state: {
-                              electionAddress: each.public_key,
+                              electionAddress: electionAddress,
                             },
                           }}
                         >

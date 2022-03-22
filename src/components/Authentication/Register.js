@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Grid,
   Paper,
@@ -6,6 +6,7 @@ import {
   Typography,
   TextField,
   Button,
+  NativeSelect,
 } from '@material-ui/core'
 import { useForm } from 'react-hook-form'
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
@@ -16,6 +17,9 @@ import './main.css'
 import { registerUser, useAuthDispatch, useAuthState } from '../Context/index'
 import { Link } from 'react-router-dom'
 import { Alert } from '@mui/material'
+import axios from '../Axios/axios'
+import urls from '../Axios/urls'
+import Loading from '../common/Loading'
 
 const formLabelsTheme = createTheme({
   overrides: {
@@ -43,6 +47,8 @@ const Register = (props) => {
   const [passwordS, setPasswordS] = useState(null)
   const [message, setMessage] = useState(null)
   const [errorText, setErrorText] = useState('')
+  const [election, setElection] = useState('')
+  const [electionList, setElectionList] = useState([])
   const dispatch = useAuthDispatch()
   const { token, user, loading, errorMessage } = useAuthState()
   const {
@@ -59,6 +65,7 @@ const Register = (props) => {
     data.append('email', email)
     data.append('password', passwordF)
     data.append('password2', passwordS)
+    data.append('enrolled_election', election)
     try {
       console.log(data)
       let response = await registerUser(dispatch, data)
@@ -86,6 +93,19 @@ const Register = (props) => {
     width: '73vh',
     margin: '50px auto',
   }
+
+  useEffect(async () => {
+    await axios({
+      url: urls.ELECTION_LIST,
+    })
+      .then((response) => {
+        // console.log('logg::', response.data.details.preparation)
+        setElectionList(response.data.details.preparation)
+        console.log('logg election::', electionList)
+      })
+      .catch((error) => {})
+  }, [])
+  console.log('logg election 11::', electionList)
   const headerStyle = { margin: 0 }
 
   const btnstyle = { margin: '8px 0', backgroundColor: '#35425D' }
@@ -104,101 +124,130 @@ const Register = (props) => {
   const handleTest = (e) => {
     console.log('sasda')
   }
+
+  const handleChange = (event) => {
+    event.preventDefault()
+    setElection(event.target.value)
+    console.log('from change::', event.target.value)
+    console.log('election::', election)
+  }
+
   return (
     <>
-      <div className="main-background"></div>
-      <div className="main-body">
-        <MuiThemeProvider theme={formLabelsTheme}>
-          <form onSubmit={(e) => submitForRegister(e)}>
-            <Grid container spacing={2}>
-              <Paper style={paperStyle}>
-                <Grid align="center">
-                  <img src={Logo} style={{ width: '100px' }} />
-                  <h3 style={{ marginTop: '-10px' }}>BallotChain</h3>
-                  <h2>Register</h2>
+      {electionList.length !== 0 ? (
+        <>
+          <div className="main-background"></div>
+          <div className="main-body">
+            <MuiThemeProvider theme={formLabelsTheme}>
+              <form onSubmit={(e) => submitForRegister(e)}>
+                <Grid container spacing={2}>
+                  <Paper style={paperStyle}>
+                    <Grid align="center">
+                      <img src={Logo} style={{ width: '100px' }} />
+                      <h3 style={{ marginTop: '-10px' }}>BallotChain</h3>
+                      <h2>Register</h2>
+                    </Grid>
+                    {errorMessage && (
+                      <Alert severity="error">{errorMessage}</Alert>
+                    )}
+                    <TextField
+                      label="First Name"
+                      placeholder="Enter First Name"
+                      // variant="outlined"
+                      fullWidth
+                      required
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                    <TextField
+                      label="Last Name"
+                      placeholder="Enter Last Name"
+                      // variant="outlined"
+                      fullWidth
+                      required
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                    <TextField
+                      label="Citizenship Number"
+                      placeholder="Enter citizenship number"
+                      name="citzn"
+                      // variant="outlined"
+                      fullWidth
+                      required
+                      // helperText={errors.citzn && 'Only number is allowed'}
+                      helperText={errorText}
+                      error={errorText}
+                      {...register('citzn', {
+                        required: true,
+                        pattern: {
+                          value: /^[0-9]+$/,
+                        },
+                      })}
+                      onChange={(e) => handleCitizenChange(e)}
+                    />
+                    <TextField
+                      label="Email"
+                      placeholder="Enter Email"
+                      // variant="outlined"
+                      type="email"
+                      fullWidth
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                      label="Password"
+                      placeholder="Enter password"
+                      // variant="outlined"
+                      type="password"
+                      fullWidth
+                      required
+                      onChange={(e) => setPasswordF(e.target.value)}
+                    />
+                    <TextField
+                      label="Confirm Password"
+                      placeholder="Confirm password"
+                      // variant="outlined"
+                      type="password"
+                      fullWidth
+                      required
+                      onChange={(e) => setPasswordS(e.target.value)}
+                    />
+                    <NativeSelect
+                      // defaultValue={null}
+                      // inputProps={{
+                      //   name: 'age',
+                      //   id: 'uncontrolled-native',
+                      // }}
+                      onChange={handleChange}
+                    >
+                      <option value={''}>Select election</option>
+                      {electionList &&
+                        electionList.map((each) => {
+                          return <option value={each.id}>{each.title}</option>
+                        })}
+                    </NativeSelect>
+                    <Button
+                      type="submit"
+                      color="primary"
+                      variant="contained"
+                      style={btnstyle}
+                      fullWidth
+                    >
+                      Register
+                    </Button>
+                    <Typography></Typography>
+                    <Typography>
+                      {' '}
+                      Already an account ?<Link href="#">Login</Link>
+                    </Typography>
+                  </Paper>
                 </Grid>
-                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-                <TextField
-                  label="First Name"
-                  placeholder="Enter First Name"
-                  // variant="outlined"
-                  fullWidth
-                  required
-                  onChange={handleTest}
-                />
-                <TextField
-                  label="Last Name"
-                  placeholder="Enter Last Name"
-                  // variant="outlined"
-                  fullWidth
-                  required
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                <TextField
-                  label="Citizenship Number"
-                  placeholder="Enter citizenship number"
-                  name="citzn"
-                  // variant="outlined"
-                  fullWidth
-                  required
-                  // helperText={errors.citzn && 'Only number is allowed'}
-                  helperText={errorText}
-                  error={errorText}
-                  {...register('citzn', {
-                    required: true,
-                    pattern: {
-                      value: /^[0-9]+$/,
-                    },
-                  })}
-                  onChange={(e) => handleCitizenChange(e)}
-                />
-                <TextField
-                  label="Email"
-                  placeholder="Enter Email"
-                  // variant="outlined"
-                  type="email"
-                  fullWidth
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                  label="Password"
-                  placeholder="Enter password"
-                  // variant="outlined"
-                  type="password"
-                  fullWidth
-                  required
-                  onChange={(e) => setPasswordF(e.target.value)}
-                />
-                <TextField
-                  label="Confirm Password"
-                  placeholder="Confirm password"
-                  // variant="outlined"
-                  type="password"
-                  fullWidth
-                  required
-                  onChange={(e) => setPasswordS(e.target.value)}
-                />
-
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  style={btnstyle}
-                  fullWidth
-                >
-                  Register
-                </Button>
-                <Typography></Typography>
-                <Typography>
-                  {' '}
-                  Already an account ?<Link href="#">Login</Link>
-                </Typography>
-              </Paper>
-            </Grid>
-          </form>
-        </MuiThemeProvider>
-      </div>
+              </form>
+            </MuiThemeProvider>
+          </div>
+        </>
+      ) : (
+        <Loading />
+      )}
     </>
   )
 }

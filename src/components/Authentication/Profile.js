@@ -316,11 +316,10 @@ const Profile = () => {
                         Participating Election
                       </InputLabel>
                       <NativeSelect
-                        defaultValue={profile.enrolled_election}
-                        inputProps={{
-                          name: 'age',
-                          id: 'uncontrolled-native',
-                        }}
+                        defaultValue={
+                          profile.enrolled_election &&
+                          'profile.enrolled_election.title'
+                        }
                         onChange={handleChange}
                       >
                         <option value={null}>Select election</option>

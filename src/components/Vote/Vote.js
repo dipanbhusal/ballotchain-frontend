@@ -166,7 +166,7 @@ const Vote = (props) => {
               <Button onClick={handleVote}>
                 <Link
                   to={{
-                    pathname: '/result',
+                    pathname: '/election-result',
                     state: {
                       electionAddress: electionAddress,
                     },

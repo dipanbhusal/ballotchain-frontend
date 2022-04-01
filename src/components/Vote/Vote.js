@@ -144,7 +144,6 @@ const Vote = (props) => {
       </>
     )
   }
-
   const DialougeBox = (data) => {
     return (
       <Dialog open={open} onClose={handleClose} style={{ width: '100%' }}>

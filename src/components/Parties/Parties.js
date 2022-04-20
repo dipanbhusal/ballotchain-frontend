@@ -28,7 +28,6 @@ const Parties = () => {
       method: 'GET',
     })
       .then((response) => {
-        console.log(response.data.details)
         setParties(response.data.details)
       })
       .catch((error) => {

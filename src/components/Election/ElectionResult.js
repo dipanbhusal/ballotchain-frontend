@@ -29,7 +29,6 @@ const ElectionResult = (props) => {
         // console.log(response)
         setCandidates(response.data.details.candidates_data)
         setVotes(response.data.details.votes)
-        console.log(response)
         setVoteCount(response.data.details.total_votes_count)
         setVoters(response.data.details.total_voters_count)
         setElectionState(response.data.details.election_state)

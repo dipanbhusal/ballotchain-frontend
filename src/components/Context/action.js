@@ -22,7 +22,6 @@ export async function loginUser(dispatch, loginPayload) {
       let refresh = encrypt(response.data.details.token.access)
       let user = response.data.details.user
 
-      console.log(response.data)
       localStorage.setItem('currentUser', JSON.stringify(user))
       localStorage.setItem('a-t', access.toString())
       axios.defaults.headers['Authorization'] =

@@ -71,7 +71,6 @@ const Profile = () => {
 
   const handleChange = (event) => {
     event.preventDefault()
-    console.log(event.target.value)
     setElectionChoice(event.target.value)
   }
 
@@ -124,7 +123,6 @@ const Profile = () => {
       setWardNo(resp.ward_no)
       setElectionChoice(resp.enrolled_election)
       setDob(resp.date_of_birth)
-      console.log(resp)
       user = JSON.parse(localStorage.getItem('currentUser'))
       user['is_verified'] = resp.is_verified
       user = localStorage.setItem('currentUser', JSON.stringify(user))

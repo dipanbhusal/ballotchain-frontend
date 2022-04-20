@@ -28,9 +28,7 @@ const Candidates = () => {
       method: 'GET',
     })
       .then((response) => {
-        console.log(response.data.details)
         setCandidates(response.data.details)
-        console.log(candidates)
       })
       .catch((error) => {
         console.log(error)

@@ -82,7 +82,6 @@ const Register = (props) => {
         })
       }
     } catch (error) {
-      console.log('2131', error)
       let message = error.message
       setMessage(message)
     }
@@ -101,18 +100,15 @@ const Register = (props) => {
       .then((response) => {
         // console.log('logg::', response.data.details.preparation)
         setElectionList(response.data.details.preparation)
-        console.log('logg election::', electionList)
       })
       .catch((error) => {})
   }, [])
-  console.log('logg election 11::', electionList)
   const headerStyle = { margin: 0 }
 
   const btnstyle = { margin: '8px 0', backgroundColor: '#35425D' }
 
   const handleCitizenChange = (e) => {
     {
-      console.log(e.target.value)
       if (isNaN(e.target.value))
         setErrorText('Citizenship contains integer only.')
       else {
@@ -122,14 +118,12 @@ const Register = (props) => {
     }
   }
   const handleTest = (e) => {
-    console.log('sasda')
   }
 
   const handleChange = (event) => {
     event.preventDefault()
     setElection(event.target.value)
-    console.log('from change::', event.target.value)
-    console.log('election::', election)
+    
   }
 
   return (

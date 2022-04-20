@@ -41,9 +41,7 @@ const ElectionList = (props) => {
       method: 'GET',
     })
       .then((response) => {
-        console.log('sss:', response)
         setElections(response.data.details)
-        console.log(elections)
       })
       .catch((error) => {
         console.log(error.response)

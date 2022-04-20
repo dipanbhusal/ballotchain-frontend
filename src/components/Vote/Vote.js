@@ -63,17 +63,13 @@ const Vote = (props) => {
       },
     })
       .then((response) => {
-        console.log(response.data.details)
         setCandidates(response.data.details)
-        console.log(candidates)
       })
       .catch((error) => {
-        console.log(error)
       })
   }
 
   async function doVote() {
-    console.log(password)
     await axios({
       url: urls.VOTE,
       method: 'POST',
@@ -93,7 +89,6 @@ const Vote = (props) => {
         setVotingOpen(false)
       })
       .catch((error) => {
-        console.log(error.response.data)
         setErrorMsg(error.response.data.message)
         setOpen(false)
         setVotingOpen(false)
@@ -103,7 +98,6 @@ const Vote = (props) => {
   const handleClickOpen = ({ candidateAddress }) => {
     setCandidateAddress(candidateAddress)
     setOpen(true)
-    console.log(candidateAddress, electionAddress)
   }
 
   const handleVote = () => {
@@ -115,7 +109,6 @@ const Vote = (props) => {
   const handleClose = () => {
     setOpen(false)
   }
-  console.log(user)
 
   const VotingProgress = () => {
     return (
@@ -144,6 +137,7 @@ const Vote = (props) => {
       </>
     )
   }
+  const handlePassword = (e) => setPassword(e.target.value)
   const DialougeBox = (data) => {
     return (
       <Dialog open={open} onClose={handleClose} style={{ width: '100%' }}>
@@ -190,7 +184,7 @@ const Vote = (props) => {
                 type="password"
                 fullWidth
                 variant="standard"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePassword}
               />
             </DialogContent>
             <DialogActions>

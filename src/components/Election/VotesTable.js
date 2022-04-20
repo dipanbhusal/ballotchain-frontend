@@ -26,6 +26,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }))
+
 const VotesTable = ({ votes }) => {
   return (
     <TableContainer component={Paper}>

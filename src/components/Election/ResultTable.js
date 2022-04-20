@@ -52,9 +52,7 @@ const ResultTable = ({ votes }) => {
         .forEach(function (key) {
           sorted[key] = data[key]
         })
-      console.log(sorted)
       setResult(sorted)
-      console.log('result:::', result)
     }
   }, [])
 

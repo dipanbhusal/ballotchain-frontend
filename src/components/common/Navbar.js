@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
-import * as FaIcons from 'react-icons/fa'
-import { AiFillHome, AiOutlineLogout, AiOutlineClose } from 'react-icons/ai'
-import { IoIosPerson, IoIosPeople } from 'react-icons/io'
-import { FaVoteYea } from 'react-icons/fa'
-import * as AiIcons from 'react-icons/ai'
+import Button from '@mui/material/Button'
 import { useHistory } from 'react-router'
 
-import { Link, NavLink, BrowserRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { SidebarData } from './SidebarData'
 import './Navbar.css'
 import Icon from '../icon.png'
 import { IconContext } from 'react-icons'
 import { logout, useAuthState, useAuthDispatch } from '../Context'
-import Profile from '../Authentication/Profile'
+
 function Navbar(props) {
-  const [sidebar, setSidebar] = useState(true)
-  const [active, setActive] = useState(true)
-  // const showSidebar = () => setSidebar(!sidebar)
   const dispatch = useAuthDispatch()
   const history = useHistory()
-  const { token } = useAuthState()
 
   const handleLogout = () => {
     logout(dispatch) //call the logout action
@@ -30,9 +22,13 @@ function Navbar(props) {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className="navbar">
-          <button className="body-auth" onClick={handleLogout}>
+          <Button
+            className="body-auth"
+            variant="contained"
+            onClick={handleLogout}
+          >
             Logout
-          </button>
+          </Button>
         </div>
         <nav className="nav-menu active">
           <ul className="nav-menu-items">

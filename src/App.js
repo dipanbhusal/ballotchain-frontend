@@ -15,6 +15,9 @@ import Parties from './components/Parties/Parties'
 import { AuthProvider } from './components/Context/context'
 import AppRoute from './components/Authentication/AppRoutes'
 import Profile from './components/Authentication/Profile'
+import ElectionList from './components/Election/ElectionList'
+import ElectionResult from './components/Election/ElectionResult'
+import Activate from './components/Authentication/Activate'
 
 function App() {
   return (
@@ -45,6 +48,21 @@ function App() {
               />
               <AppRoute
                 exact
+                path="/elections"
+                exact
+                component={ElectionList}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/election-result"
+                exact
+                component={ElectionResult}
+                isPrivate={true}
+              />
+
+              <AppRoute
+                exact
                 path="/candidates"
                 exact
                 component={Candidates}
@@ -62,6 +80,13 @@ function App() {
                 path="/profile"
                 exact
                 component={Profile}
+                isPrivate={true}
+              />
+              <AppRoute
+                exact
+                path="/activate"
+                exact
+                component={Activate}
                 isPrivate={true}
               />
             </Mainlayout>

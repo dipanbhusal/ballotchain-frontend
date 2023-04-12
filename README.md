@@ -1,4 +1,4 @@
-# Blockchain Based Online Voting System
+# BallotChain: Blockchain Based Online Voting System
 
 This is a project developed using React that allows users to vote in an online election using blockchain technology. The system is secure, transparent, and tamper-proof. 
 
